@@ -6,7 +6,7 @@
     <title>GROOVECMD — Terminal Music Player</title>
     <meta name="description" content="Retro terminal-style music player powered by JioSaavn & YouTube">
     <link rel="icon" type="image/svg+xml" href="logo.svg">
-    <link rel="stylesheet" href="css/style.css?v=2">
+    <link rel="stylesheet" href="css/style.css?v=3">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -498,6 +498,25 @@
                     </div>
                 </div>
             </footer>
+            <!-- Mobile Bottom Navigation (Spotify-style, hidden on desktop) -->
+            <nav class="mobile-bottom-nav">
+                <button class="mobile-nav-btn active" onclick="App.switchGuiTab('scanner'); document.querySelectorAll('.mobile-nav-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active');">
+                    <span class="mobile-nav-icon">🏠</span>
+                    <span class="mobile-nav-label">Home</span>
+                </button>
+                <button class="mobile-nav-btn" onclick="App.switchGuiTab('vault'); document.querySelectorAll('.mobile-nav-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active');">
+                    <span class="mobile-nav-icon">📚</span>
+                    <span class="mobile-nav-label">Library</span>
+                </button>
+                <button class="mobile-nav-btn" onclick="App.switchGuiTab('decoder'); document.querySelectorAll('.mobile-nav-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active');">
+                    <span class="mobile-nav-icon">🎤</span>
+                    <span class="mobile-nav-label">Lyrics</span>
+                </button>
+                <button class="mobile-nav-btn" onclick="App.switchGuiTab('mixer'); document.querySelectorAll('.mobile-nav-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active');">
+                    <span class="mobile-nav-icon">⚙️</span>
+                    <span class="mobile-nav-label">Settings</span>
+                </button>
+            </nav>
         </div>
     </div>
 

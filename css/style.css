@@ -2339,7 +2339,16 @@ body.theme-nebula .gui-cassette {
 }
 body.theme-nebula .layout-toggle-container { border-color: rgba(189, 147, 249, 0.25); }
 
-/* Responsive media query for modern 3-column GUI layout */
+/* ── Mobile Bottom Nav (hidden on desktop) ── */
+.mobile-bottom-nav {
+    display: none;
+}
+
+/* ==========================================================================
+   RESPONSIVE LAYOUT — CONSOLIDATED (TABLET + MOBILE)
+   ========================================================================== */
+
+/* ── Tablet: 3-col → 2-col ── */
 @media (max-width: 1200px) {
     body.mode-gui #cyber-deck-dashboard.modern-gui {
         grid-template-columns: 200px 1fr;
@@ -2352,40 +2361,7 @@ body.theme-nebula .layout-toggle-container { border-color: rgba(189, 147, 249, 0
     }
 }
 
-@media (max-width: 768px) {
-    body.mode-gui #cyber-deck-dashboard.modern-gui {
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            "main"
-            "playbar";
-    }
-    .gui-sidebar {
-        display: none !important;
-    }
-    .featured-hero-banner {
-        padding: 20px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
-    .hero-overlay-art {
-        display: none !important;
-    }
-    .playbar-left {
-        width: auto;
-        min-width: 0;
-        flex: 1;
-    }
-    .playbar-center {
-        width: auto;
-        flex: 2;
-    }
-    .playbar-album-art-wrap {
-        width: 40px;
-        height: 40px;
-    }
-}
-
+/* ── Boot Selector mobile ── */
 @media (max-width: 900px) {
     .boot-options {
         grid-template-columns: 1fr;
@@ -2401,578 +2377,323 @@ body.theme-nebula .layout-toggle-container { border-color: rgba(189, 147, 249, 0
     .boot-container {
         padding: 20px;
     }
+    .discover-playlist-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px;
+    }
 }
 
 /* ==========================================================================
-   SPOTIFY-STYLE GLOWING CARDS & DISCOVER FEED STYLES (GUI ONLY)
-   ========================================================================= */
-
-.gui-discover-feed {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    padding: 10px 0;
-}
-
-.discover-section {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 8px;
-}
-
-.discover-section-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #ffffff;
-    margin-bottom: 4px;
-}
-
-.discover-section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 20px;
-}
-
-.section-view-all {
-    color: #a0a0a0;
-    font-size: 14px;
-    text-decoration: none;
-    transition: color 0.2s;
-}
-
-.section-view-all:hover {
-    color: #fff;
-}
-
-/* Featured Playlists Grid */
-.discover-playlist-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
-
-.discover-playlist-card {
-    position: relative;
-    border-radius: 20px;
-    padding: 20px;
-    cursor: pointer;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    aspect-ratio: 1 / 1;
-    border: none;
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.discover-playlist-card:hover {
-    transform: translateY(-5px);
-}
-
-.playlist-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    z-index: 2;
-}
-
-.playlist-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: #ffffff;
-    line-height: 1.2;
-    z-index: 2;
-}
-
-.playlist-desc {
-    font-size: 12px;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.9);
-    z-index: 2;
-    margin-top: auto;
-}
-
-.playlist-cover-art {
-    position: absolute;
-    bottom: -10px;
-    right: -20px;
-    width: 65%;
-    height: 65%;
-    transform: rotate(15deg);
-    z-index: 1;
-    border-radius: 8px;
-    box-shadow: -5px 5px 15px rgba(0,0,0,0.3);
-}
-
-/* Song Cards Grid */
-.discover-songs-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-}
-
-.discover-song-card {
-    background: transparent;
-    border-radius: 8px;
-    padding: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    transition: background 0.2s;
-}
-
-.discover-song-card:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.song-card-art {
-    position: relative;
-    width: 48px;
-    height: 48px;
-    border-radius: 6px;
-    overflow: hidden;
-    flex-shrink: 0;
-}
-
-.song-card-art img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.song-play-overlay-btn {
-    display: none;
-}
-    height: 40px;
-    border-radius: 50%;
-    background: var(--primary-glow);
-    border: none;
-    color: var(--bg);
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), var(--glow);
-    outline: none;
-}
-
-.discover-song-card:hover .song-play-overlay-btn {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.song-play-overlay-btn:hover {
-    background: #ffffff;
-    color: #000000;
-    transform: scale(1.08) !important;
-}
-
-.song-card-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    overflow: hidden;
-}
-
-.song-card-title {
-    font-size: 13px;
-    font-weight: 700;
-    color: #f0f0f5;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: color 0.2s ease;
-}
-
-.discover-song-card:hover .song-card-title {
-    color: var(--primary-glow);
-    text-shadow: var(--glow-text);
-}
-
-.song-card-artist {
-    font-size: 11px;
-    color: rgba(180, 185, 210, 0.8);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* Elegant and minimalist queue pill button at bottom of card */
-.song-card-queue-btn {
-    background: rgba(var(--primary-rgb), 0.08);
-    border: 1px solid rgba(var(--primary-rgb), 0.25);
-    color: rgba(200, 210, 255, 0.85);
-    font-family: var(--font);
-    font-size: 9px;
-    font-weight: 700;
-    padding: 5px 8px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    align-self: center;
-    width: 100%;
-    text-align: center;
-    outline: none;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-body.theme-nebula .song-card-queue-btn { border-color: rgba(189, 147, 249, 0.2); color: var(--primary-dim); }
-body.theme-cyber .song-card-queue-btn  { border-color: rgba(0, 229, 255, 0.2); color: var(--primary-dim); }
-body.theme-retro .song-card-queue-btn  { border-color: rgba(255, 184, 108, 0.2); color: var(--primary-dim); }
-body.theme-ghost .song-card-queue-btn  { border-color: rgba(255, 255, 255, 0.2); color: var(--primary-dim); }
-
-.discover-song-card:hover .song-card-queue-btn {
-    border-color: var(--primary-glow);
-    color: var(--primary-glow);
-    background: rgba(0, 255, 65, 0.05);
-}
-
-.song-card-queue-btn:hover {
-    background: var(--primary) !important;
-    color: var(--bg) !important;
-    box-shadow: var(--glow);
-}
-
-/* Playlist sub-panel tracklist styles */
-.tracklist-header-banner {
-    position: relative;
-    border-radius: 12px;
-    padding: 30px;
-    margin-bottom: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
-}
-
-.tracklist-back-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #ffffff;
-    font-family: var(--font);
-    font-size: 10px;
-    font-weight: bold;
-    padding: 6px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    z-index: 5;
-    outline: none;
-}
-
-.tracklist-back-btn:hover {
-    background: #ffffff;
-    color: #000000;
-    border-color: #ffffff;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-}
-
-.tracklist-header-content {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.tracklist-subtitle {
-    font-size: 10px;
-    font-weight: bold;
-    color: rgba(255, 255, 255, 0.6);
-    letter-spacing: 2px;
-}
-
-.tracklist-title {
-    font-size: 24px;
-    font-weight: 700;
-    color: #ffffff;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.tracklist-desc {
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.8);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    max-width: 80%;
-}
-
-.cassette-list-item {
-    display: flex;
-    align-items: center;
-    background: transparent;
-    border: none;
-    border-radius: 4px;
-    padding: 8px 16px;
-    gap: 16px;
-    transition: background-color 0.2s ease;
-}
-
-.cassette-list-item:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.item-num {
-    font-size: 16px;
-    color: #b3b3b3;
-    font-weight: 400;
-    width: 24px;
-    text-align: right;
-    margin-right: 8px;
-}
-
-.item-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    overflow: hidden;
-}
-
-.item-title {
-    font-size: 16px;
-    font-weight: 400;
-    color: #ffffff;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.item-artist {
-    font-size: 14px;
-    font-weight: 400;
-    color: #b3b3b3;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.item-src-badge.tag-spotify {
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: #b3b3b3;
-    font-size: 10px;
-    padding: 3px 8px;
-    border-radius: 4px;
-    letter-spacing: 1px;
-}
-
-.action-btn-play {
-    background: transparent;
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    font-family: var(--font);
-    font-size: 12px;
-    font-weight: 600;
-    padding: 6px 16px;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    outline: none;
-}
-
-.action-btn-play:hover {
-    border-color: #ffffff;
-    transform: scale(1.04);
-}
-
-.action-btn-queue {
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: #ffffff;
-    font-family: var(--font);
-    font-size: 12px;
-    font-weight: 600;
-    padding: 6px 16px;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    outline: none;
-}
-
-.action-btn-queue:hover {
-    border-color: #ffffff;
-    transform: scale(1.04);
-}
-
-/* Responsive adjustments */
-@media (max-width: 900px) {
-    .discover-playlist-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-}
-
+   PHONE SCREENS — SPOTIFY-STYLE LAYOUT
+   ========================================================================== */
 @media (max-width: 768px) {
-    .discover-songs-grid {
-        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-        gap: 12px;
+
+    /* ── ROOT: Prevent ALL horizontal overflow ── */
+    html, body {
+        width: 100% !important;
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
     }
-    .discover-playlist-card {
-        padding: 16px;
-        gap: 12px;
+    #terminal-window {
+        width: 100% !important;
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
     }
-    .playlist-icon {
-        font-size: 24px;
+
+    /* ── TERMINAL CLI MODE ── */
+    #titlebar .tb-title {
+        display: none;
     }
-    .discover-song-card {
-        padding: 10px;
-        gap: 8px;
-    }
-    .song-play-overlay-btn {
-        width: 32px;
-        height: 32px;
-        font-size: 12px;
-    }
-    .vault-columns {
-        flex-direction: column;
-        gap: 20px;
+    #status-dashboard {
+        font-size: 10px;
+        gap: 6px;
+        padding: 5px 8px;
+        flex-wrap: wrap;
         height: auto;
     }
-    .vault-column {
-        flex: none;
-        height: 350px;
+    #eq-toggle-btn {
+        display: inline-block !important;
     }
-    .cassette-list-item {
-        padding: 8px 12px;
-        gap: 10px;
+    #side-panel {
+        position: absolute;
+        top: 0; right: -320px; bottom: 0;
+        width: 290px;
+        z-index: 1000;
+        background: rgba(4, 8, 4, 0.96);
+        backdrop-filter: blur(12px);
+        border-left: 2px solid var(--primary-dim);
+        box-shadow: -5px 0 25px rgba(0, 0, 0, 0.9);
+        transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
     }
-    .action-btn-play, .action-btn-queue {
-        padding: 5px 10px;
-        font-size: 10px;
+    #side-panel.open { right: 0; }
+    body.theme-nebula #side-panel { background: rgba(15, 11, 26, 0.96); }
+    body.theme-cyber #side-panel { background: rgba(10, 15, 20, 0.96); }
+    body.theme-retro #side-panel { background: rgba(26, 19, 12, 0.96); }
+    body.theme-ghost #side-panel { background: rgba(18, 18, 18, 0.96); }
+    #mobile-shortcut-bar {
+        display: flex !important;
+        gap: 8px; padding: 6px 12px;
+        background: rgba(0, 0, 0, 0.3);
+        border-top: 1px dashed rgba(255, 255, 255, 0.1);
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+        overflow-x: auto; white-space: nowrap;
+        scrollbar-width: none; flex-shrink: 0;
     }
-}
+    #mobile-shortcut-bar::-webkit-scrollbar { display: none; }
+    .shortcut-pill {
+        background: transparent;
+        border: 1px solid var(--primary-dim);
+        color: var(--primary-dim);
+        font-family: var(--font); font-size: 11px; font-weight: 700;
+        padding: 4px 10px; border-radius: 12px;
+        cursor: pointer; flex-shrink: 0;
+    }
+    #now-playing { font-size: 11px; padding: 0 8px 6px; }
+    .np-progress-wrap { display: none; }
+    #np-time { min-width: 60px; }
+    #np-vol { min-width: 50px; }
+    #np-shuf, #np-rep { display: none; }
+    .knob { width: 64px; height: 64px; }
+    .knob-label { font-size: 10px; }
+    .knob-value { font-size: 11px; }
+    html, body { font-size: 13px; }
 
-@media (max-width: 600px) {
-    .cassette-list-item {
-        gap: 8px;
-        padding: 6px 10px;
+    /* ── GUI MODE: GRID LAYOUT → SINGLE COLUMN ── */
+    body.mode-gui #cyber-deck-dashboard.modern-gui {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        height: 100vh !important;
+        overflow: hidden !important;
     }
-    .item-src-badge {
+
+    /* Hide desktop sidebar & right now-playing panel */
+    .gui-sidebar {
         display: none !important;
     }
-    .action-btn-play {
-        padding: 4px 8px;
-        font-size: 9px;
-    }
-    .action-btn-queue {
-        padding: 4px 6px;
-        font-size: 9px;
-    }
-}
-
-/* --- COMPREHENSIVE MOBILE OPTIMIZATION --- */
-@media (max-width: 768px) {
-    /* Main Panel Padding */
-    #panel-scanner, #panel-vault, #panel-decoder, #panel-mixer {
-        padding: 15px 15px 80px 15px !important;
+    .gui-now-playing-sidebar {
+        display: none !important;
     }
 
-    /* Main Header Search & Importer */
+    /* ── MAIN CONTENT fills available space ── */
+    .gui-main-content {
+        flex: 1 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+        min-height: 0 !important;
+    }
+
+    .main-scrollable-container {
+        flex: 1 !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 140px !important; /* space for playbar + nav */
+    }
+
+    /* ── HEADER: Stack search + import vertically, full width ── */
     .main-header {
         height: auto !important;
-        padding: 10px 15px !important;
+        padding: 10px 12px !important;
         display: flex !important;
         flex-direction: column !important;
         align-items: stretch !important;
-        gap: 10px !important;
+        gap: 8px !important;
+        flex-shrink: 0 !important;
     }
     .header-search-wrap {
         display: flex !important;
-        max-width: 100% !important;
         width: 100% !important;
+        max-width: 100% !important;
         flex: none !important;
+        box-sizing: border-box !important;
     }
     .header-import-wrap {
         display: flex !important;
-        max-width: 100% !important;
         width: 100% !important;
+        max-width: 100% !important;
         flex: none !important;
+        box-sizing: border-box !important;
         visibility: visible !important;
         opacity: 1 !important;
     }
+    .header-search-wrap input,
     .header-import-wrap input {
         flex: 1 !important;
-        width: auto !important;
+        min-width: 0 !important;
+        width: 0 !important; /* flex-basis trick */
     }
-    .header-search-wrap input {
-        flex: 1 !important;
-        width: auto !important;
+    .gui-search-provider {
+        flex-shrink: 0;
     }
 
-    /* Featured Hero Banner */
+    /* ── PANELS: Reduce padding, account for bottom bars ── */
+    #panel-scanner {
+        padding: 10px 15px 20px 15px !important;
+    }
+    #panel-vault, #panel-decoder, #panel-mixer {
+        padding: 15px 15px 20px 15px !important;
+    }
+    .page-main-title {
+        font-size: 28px !important;
+        margin-bottom: 16px !important;
+    }
+
+    /* ── FEATURED HERO BANNER ── */
     .featured-hero-banner {
         min-height: auto !important;
         padding: 20px !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+        border-radius: 14px !important;
+        margin-bottom: 20px !important;
+    }
+    .featured-hero-banner::before {
+        width: 150px !important;
+        height: 150px !important;
+        right: -5% !important;
+        top: -30% !important;
     }
     .hero-song-title {
-        font-size: 24px !important;
-        margin-bottom: 12px !important;
+        font-size: 22px !important;
+        margin: 4px 0 12px 0 !important;
+    }
+    .hero-artist-label {
+        font-size: 13px !important;
+    }
+    .hero-listen-btn {
+        padding: 10px 22px !important;
+        font-size: 13px !important;
+    }
+    .hero-overlay-art {
+        display: none !important;
     }
 
-    /* Playlist Grid */
+    /* ── PLAYLIST GRID: 2 columns on phone ── */
     .discover-playlist-grid {
         grid-template-columns: repeat(2, 1fr) !important;
-        gap: 12px !important;
+        gap: 10px !important;
     }
-    
-    /* Song Grid */
-    .discover-songs-grid {
-        grid-template-columns: 1fr !important;
+    .discover-playlist-card {
+        padding: 14px !important;
+        border-radius: 14px !important;
+    }
+    .playlist-title {
+        font-size: 14px !important;
+    }
+    .playlist-desc {
+        font-size: 10px !important;
+    }
+    .playlist-cover-art {
+        width: 55% !important;
+        height: 55% !important;
     }
 
-    /* Playbar Updates for touch */
-    .gui-persistent-playbar {
-        padding: 10px 15px !important;
-        height: auto !important;
-        flex-wrap: wrap;
-        gap: 10px;
+    /* ── SONG GRID: single column list-style ── */
+    .discover-songs-grid {
+        grid-template-columns: 1fr !important;
+        gap: 4px !important;
     }
-    .playbar-left {
-        width: 100% !important;
-        margin-bottom: 5px;
+    .discover-song-card {
+        padding: 8px 4px !important;
+        gap: 10px !important;
+        border-radius: 8px !important;
     }
-    .playbar-center {
-        width: 100% !important;
+    .song-card-art {
+        width: 44px !important;
+        height: 44px !important;
     }
-    .playbar-playback-controls {
-        gap: 15px !important;
+    .song-card-meta {
+        min-width: 0 !important;
+        flex: 1 !important;
     }
-    .playbar-btn {
-        width: 40px !important;
-        height: 40px !important;
+    .song-card-title {
+        font-size: 13px !important;
+    }
+    .song-card-artist {
+        font-size: 11px !important;
+    }
+    .song-card-queue-btn {
+        display: none !important; /* too cramped on mobile, tap card to play */
+    }
+    .discover-section-title {
         font-size: 16px !important;
     }
-    .playbar-play-btn {
-        width: 46px !important;
-        height: 46px !important;
+    .discover-section-header {
+        margin-bottom: 10px !important;
+    }
+
+    /* ── VAULT PANEL ── */
+    .vault-columns {
+        flex-direction: column !important;
+        gap: 20px !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+    .vault-column {
+        flex: none !important;
+        height: auto !important;
+        max-height: 350px;
+    }
+    .cassette-list-item {
+        padding: 8px 10px !important;
+        gap: 8px !important;
+    }
+    .item-title { font-size: 14px !important; }
+    .item-artist { font-size: 12px !important; }
+    .item-num { font-size: 13px !important; width: 20px !important; }
+    .item-src-badge { display: none !important; }
+    .action-btn-play, .action-btn-queue {
+        padding: 5px 10px !important;
+        font-size: 10px !important;
+    }
+
+    /* ── TRACKLIST PANEL (Spotify Import results) ── */
+    .tracklist-header-banner {
+        padding: 15px !important;
+        border-radius: 10px !important;
+        flex-direction: column !important;
+    }
+    .tracklist-title {
         font-size: 18px !important;
     }
-    
-    /* Mixer Knobs Grid */
+    .tracklist-desc {
+        max-width: 100% !important;
+        font-size: 11px !important;
+    }
+
+    /* ── MIXER / EQUALIZER ── */
     .gui-mixer-knobs {
         grid-template-columns: repeat(2, 1fr) !important;
-        gap: 15px !important;
-        padding: 20px 10px !important;
+        gap: 10px !important;
+        padding: 18px 10px !important;
     }
     .mixer-knob-cell {
         border-right: none !important;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-        padding-bottom: 15px !important;
+        padding: 10px 8px !important;
     }
-    .mixer-knob-cell:nth-child(3), .mixer-knob-cell:nth-child(4) {
-        border-bottom: none;
+    .gui-mixer-slider {
+        height: 100px !important;
+    }
+    .gui-mixer-presets {
+        padding: 14px !important;
+    }
+    .preset-pill-row {
+        gap: 6px !important;
+    }
+    .gui-pill-btn {
+        padding: 6px 10px !important;
+        font-size: 10px !important;
     }
 
-    /* Decoder Lyrics */
+    /* ── DECODER / LYRICS ── */
+    .lyrics-teleprompter {
+        padding: 20px 8px !important;
+    }
     .lyric-line {
         font-size: 14px !important;
         padding: 8px 10px !important;
@@ -2980,55 +2701,173 @@ body.theme-ghost .song-card-queue-btn  { border-color: rgba(255, 255, 255, 0.2);
     .lyric-line.active {
         font-size: 18px !important;
     }
-}
 
-@media (max-width: 480px) {
-    /* Extreme narrow adjustments */
-    .discover-playlist-grid {
-        grid-template-columns: 1fr !important;
+    /* ── BOTTOM PLAYBAR: Spotify mini-player style ── */
+    .gui-persistent-playbar {
+        position: fixed !important;
+        bottom: 56px !important; /* above the mobile nav */
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 200 !important;
+        height: 60px !important;
+        padding: 0 12px !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        background: var(--bg-panel) !important;
+        border-top: 1px solid var(--border) !important;
+        backdrop-filter: blur(25px) !important;
+        flex-wrap: nowrap !important;
     }
-    .playbar-playback-controls {
+    /* Timeline sits at very top of playbar */
+    .playbar-timeline-container {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 3px !important;
+        min-width: 0 !important;
+    }
+    /* Left: compact album art + track info */
+    .playbar-left {
+        flex: 1 !important;
+        width: auto !important;
+        min-width: 0 !important;
+        display: flex !important;
+        align-items: center !important;
         gap: 10px !important;
     }
-}
-
-/* --- FIX HORIZONTAL OVERFLOW --- */
-@media (max-width: 768px) {
-    body, html, #terminal-window {
-        width: 100% !important;
-        max-width: 100% !important;
-        overflow-x: hidden !important;
+    .playbar-album-art-wrap {
+        width: 42px !important;
+        height: 42px !important;
+        flex-shrink: 0 !important;
+        border-radius: 6px !important;
+    }
+    .playbar-track-details {
+        min-width: 0 !important;
+        flex: 1 !important;
+    }
+    .playbar-track-title {
+        font-size: 12px !important;
+    }
+    .playbar-track-artist {
+        font-size: 10px !important;
+    }
+    .playbar-source-badge {
+        display: none !important;
+    }
+    .playbar-heart-btn {
+        font-size: 14px !important;
+        padding: 4px !important;
+    }
+    /* Center: Only show play/prev/next inline */
+    .playbar-center {
+        width: auto !important;
+        max-width: none !important;
+        flex: none !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+    .playbar-playback-controls {
+        gap: 8px !important;
+    }
+    .playbar-ctrl-btn {
+        font-size: 16px !important;
+    }
+    .playbar-play-btn {
+        width: 34px !important;
+        height: 34px !important;
+        font-size: 13px !important;
+    }
+    /* Hide shuffle/repeat in mini playbar */
+    #gui-btn-shuf, #gui-btn-rep {
+        display: none !important;
+    }
+    /* Hide right section (volume, radio toggle) */
+    .playbar-right {
+        display: none !important;
     }
 
-    body.mode-gui #cyber-deck-dashboard.modern-gui {
-        width: 100% !important;
-        max-width: 100% !important;
-        overflow-x: hidden !important;
+    /* ── MOBILE BOTTOM NAVIGATION BAR ── */
+    .mobile-bottom-nav {
+        display: flex !important;
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        height: 56px !important;
+        z-index: 300 !important;
+        background: rgba(18, 18, 20, 0.97) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+        align-items: center !important;
+        justify-content: space-around !important;
+        padding: 0 8px !important;
+    }
+    .mobile-nav-btn {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 2px !important;
+        background: none !important;
+        border: none !important;
+        color: rgba(255, 255, 255, 0.5) !important;
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 10px !important;
+        cursor: pointer !important;
+        padding: 6px 12px !important;
+        transition: color 0.2s !important;
+        outline: none !important;
+        -webkit-tap-highlight-color: transparent !important;
+    }
+    .mobile-nav-btn.active {
+        color: #ffffff !important;
+    }
+    .mobile-nav-icon {
+        font-size: 20px !important;
+        line-height: 1 !important;
+    }
+    .mobile-nav-label {
+        font-size: 10px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.3px !important;
     }
 
-    /* Wrap terminal top dashboard elements */
-    #status-dashboard {
-        flex-wrap: wrap !important;
-        height: auto !important;
-    }
-
-    /* Ensure flex children text-overflow works without expanding width */
+    /* ── Flex children: prevent overflow ── */
     .playbar-track-details,
     .song-card-meta,
     .compact-queue-details,
     .item-info,
-    .playbar-timeline-container {
+    .mini-label {
         min-width: 0 !important;
     }
-
     .playbar-seek-bar-wrap {
         min-width: 0 !important;
-        width: 100% !important;
-        flex: 1 !important;
-    }
-
-    /* Wrap input boxes */
-    .header-search-wrap, .header-import-wrap {
-        flex-wrap: wrap !important;
     }
 }
+
+/* ── Extra-small phones (≤ 400px) ── */
+@media (max-width: 400px) {
+    .discover-playlist-grid {
+        grid-template-columns: 1fr !important;
+    }
+    .featured-hero-banner {
+        padding: 14px !important;
+    }
+    .hero-song-title {
+        font-size: 18px !important;
+    }
+    .page-main-title {
+        font-size: 22px !important;
+    }
+    .playbar-play-btn {
+        width: 30px !important;
+        height: 30px !important;
+        font-size: 12px !important;
+    }
+}
+
+
