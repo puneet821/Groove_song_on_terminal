@@ -2991,3 +2991,44 @@ body.theme-ghost .song-card-queue-btn  { border-color: rgba(255, 255, 255, 0.2);
         gap: 10px !important;
     }
 }
+
+/* --- FIX HORIZONTAL OVERFLOW --- */
+@media (max-width: 768px) {
+    body, html, #terminal-window {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+    }
+
+    body.mode-gui #cyber-deck-dashboard.modern-gui {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+    }
+
+    /* Wrap terminal top dashboard elements */
+    #status-dashboard {
+        flex-wrap: wrap !important;
+        height: auto !important;
+    }
+
+    /* Ensure flex children text-overflow works without expanding width */
+    .playbar-track-details,
+    .song-card-meta,
+    .compact-queue-details,
+    .item-info,
+    .playbar-timeline-container {
+        min-width: 0 !important;
+    }
+
+    .playbar-seek-bar-wrap {
+        min-width: 0 !important;
+        width: 100% !important;
+        flex: 1 !important;
+    }
+
+    /* Wrap input boxes */
+    .header-search-wrap, .header-import-wrap {
+        flex-wrap: wrap !important;
+    }
+}
